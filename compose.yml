@@ -11,6 +11,8 @@ services:
       - backend
     stdin_open: true
     tty: true
+    environment:
+      - BACKEND_HOST=backend
 
   backend:
     build: ./backend
