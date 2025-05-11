@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "msw": "^2.8.2",
     "tailwindcss": "^4"
   },
   "browserslist": ">0.2%, not dead, not op_mini all"
