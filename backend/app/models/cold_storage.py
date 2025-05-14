@@ -12,3 +12,5 @@ class ColdStorage(Base):
 
     provider_id = Column(Integer, ForeignKey('users.id'))
     provider = relationship('User', back_populates='cold_storages')
+
+    bookings = relationship('Booking', back_populates='cold_storage')

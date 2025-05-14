@@ -12,3 +12,5 @@ class Truck(Base):
 
     provider_id = Column(Integer, ForeignKey('users.id'))
     provider = relationship('User', back_populates='trucks')
+
+    bookings = relationship('Booking', back_populates='truck')

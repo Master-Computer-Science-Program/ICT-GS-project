@@ -19,3 +19,5 @@ class User(Base):
     cold_storages = relationship('ColdStorage', back_populates='provider')
     trucks = relationship('Truck', back_populates='provider')
     discounts = relationship('Discount', back_populates='provider')
+
+    bookings = relationship('Booking', back_populates='farmer')
