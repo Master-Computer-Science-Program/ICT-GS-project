@@ -43,8 +43,11 @@ def create_booking(
 # Update booking
 # ---------------------------
 @router.put("/{booking_id}", response_model=BookinginDB)
-def update_booking(booking_id: int, booking_data: BookingUpdate, db: Session = Depends(get_db)):
+def update_booking(booking_id: int, booking_data: BookingUpdate, db: Session = Depends(get_db), provider: User = Depends(require_any_role(["provider"]))):
+    # Check if the user is the owner of the booking
     booking = crud_booking.get_booking_by_id(db, booking_id)
+    if booking and booking.farmer_id != provider.id:
+        raise HTTPException(status_code=403, detail="Not authorized to update this booking")
     if not booking:
         raise HTTPException(status_code=404, detail="Booking not found")
 
@@ -69,3 +72,13 @@ def get_my_bookings(
     db: Session = Depends(get_db)
 ):
     return crud_booking.get_bookings_by_farmer(db, farmer.id)
+
+# ---------------------------
+# Get bookings by provider (Provider only)
+# ---------------------------
+@router.get("/provider/me", response_model=List[BookinginDB])
+def get_bookings_by_provider(
+    provider: User = Depends(require_any_role(["provider"])),
+    db: Session = Depends(get_db)
+):
+    return crud_booking.get_bookings_by_provider(db, provider.id)

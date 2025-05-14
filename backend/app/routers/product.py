@@ -7,7 +7,7 @@ from app.utils.security import require_any_role
 
 from app.models.user import User
 
-router = APIRouter(prefix="/products", tags=["products"])
+router = APIRouter(prefix="/products", tags=["Products"])
 
 @router.post("/", response_model=ProductRead)
 def register_product(product: ProductCreate, db: Session = Depends(get_db), farmer: User = Depends(require_any_role(["farmer"]))):

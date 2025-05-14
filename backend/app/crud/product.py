@@ -19,7 +19,8 @@ def update_product(db: Session, product_id: str, product: ProductUpdate, owner_i
     db_product = get_product(db, product_id)
     if db_product and db_product.owner_id == owner_id:
         for key, value in product.dict().items():
-            setattr(db_product, key, value)
+            if value is not None:
+                setattr(db_product, key, value)
         db.commit()
         db.refresh(db_product)
     return db_product

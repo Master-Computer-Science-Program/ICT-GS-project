@@ -53,7 +53,8 @@ def update_booking(db: Session, booking_id: int, booking_data: BookingUpdate):
     booking = db.query(Booking).filter(Booking.id == booking_id).first()
     if booking:
         for key, value in booking_data.dict().items():
-            setattr(booking, key, value)
+            if value is not None:
+                setattr(booking, key, value)
         db.commit()
         db.refresh(booking)
         return booking
@@ -69,3 +70,10 @@ def delete_booking(db: Session, booking_id: int):
 
 def get_bookings_by_farmer(db: Session, farmer_id: int):
     return db.query(Booking).filter(Booking.farmer_id == farmer_id).all()
+
+def get_bookings_by_provider(db: Session, provider_id: int):
+    return db.query(Booking).filter(
+        (Booking.cold_storage.has(provider_id=provider_id)) | 
+        (Booking.truck.has(provider_id=provider_id))
+    ).all()
+    
