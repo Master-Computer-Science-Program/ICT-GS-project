@@ -12,10 +12,14 @@ class ProductCreate(ProductBase):
     pass
 
 class ProductUpdate(ProductBase):
-    pass
+    type: Optional[str] = None
+    quantity: Optional[int] = None
+    harvestDate: Optional[date] = None
+    price: Optional[float] = None
 
 class ProductRead(ProductBase):
     id: int
+    owner_id: Optional[int] = None
 
     class Config:
         orm_mode = True
