@@ -7,7 +7,7 @@ from app.crud import truck as crud
 from app.utils.security import require_any_role
 from app.models.user import User
 
-router = APIRouter(prefix="/truck", tags=["Truck"])
+router = APIRouter(prefix="/trucks", tags=["Trucks"])
 
 # ---------------------------
 # Get all trucks
