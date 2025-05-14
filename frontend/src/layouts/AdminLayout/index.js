@@ -1,30 +1,61 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Layout, Menu } from 'antd';
+import { DashboardOutlined, UserOutlined, AlertOutlined } from '@ant-design/icons';
+
+const { Header, Sider, Content, Footer } = Layout;
 
 const AdminLayout = ({ children }) => {
-  return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <aside className="sidebar">
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>
-          Admin Panel
-        </h2>
-        <nav>
-          <Link to="/admin/dashboard" className="nav-link">
-            Dashboard
-          </Link>
-          <Link to="/admin/users" className="nav-link">
-            User Management
-          </Link>
-          <Link to="/admin/alerts" className="nav-link">
-            System Alerts
-          </Link>
-        </nav>
-      </aside>
+  const location = useLocation();
+  const navigate = useNavigate();
 
-      <main style={{ flex: 1, padding: '2rem', backgroundColor: '#fff' }}>
-        {children}
-      </main>
-    </div>
+  const menuItems = [
+    {
+      key: '/admin/dashboard',
+      icon: <DashboardOutlined />,
+      label: 'Dashboard',
+    },
+    {
+      key: '/admin/users',
+      icon: <UserOutlined />,
+      label: 'User Management',
+    },
+    {
+      key: '/admin/alerts',
+      icon: <AlertOutlined />,
+      label: 'System Alerts',
+    },
+  ];
+
+  const onMenuClick = ({ key }) => {
+    navigate(key);
+  };
+
+  return (
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider>
+        <div style={{ height: 32, margin: 16, color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: '16px', lineHeight: '32px' }}>
+          Admin Panel
+        </div>
+        <Menu
+          theme="dark"
+          mode="inline"
+          selectedKeys={[location.pathname]}
+          items={menuItems}
+          onClick={onMenuClick}
+        />
+      </Sider>
+
+      <Layout>
+        <Content style={{ margin: '16px' }}>
+          {children}
+        </Content>
+
+        <Footer style={{ textAlign: 'center' }}>
+          © 2025 ICT Project
+        </Footer>
+      </Layout>
+    </Layout>
   );
 };
 
