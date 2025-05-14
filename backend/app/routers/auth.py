@@ -26,4 +26,4 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Sessio
     if not db_user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     token = crud_auth.login_user(db_user)
-    return {"access_token": token, "token_type": "bearer"}
+    return {"access_token": token, "token_type": "bearer", "user": db_user}
