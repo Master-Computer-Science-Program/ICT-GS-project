@@ -14,6 +14,12 @@ class ColdStorageBase(BaseModel):
 class ColdStorageCreate(ColdStorageBase):
     pass
 
+class ColdStorageUpdate(BaseModel):
+    location: Optional[str] = None
+    capacity: Optional[int] = None
+    pricePerDay: Optional[float] = None
+    availability: Optional[bool] = None
+
 class ColdStorageOut(ColdStorageBase):
     id: int
     availability: bool
