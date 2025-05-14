@@ -45,18 +45,18 @@ const App = () => {
                 </Route>
 
                 {/* Customer Protected Routes */}
-                <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
+                {/* <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
                     <Route path="/customer/catalog" element={<ProductCatalogPage />} />
                     <Route path="/customer/cart" element={<ShoppingCartPage />} />
                     <Route path="/customer/orders" element={<OrderHistoryPage />} />
-                </Route>
+                </Route> */}
 
                 {/* Service Provider Protected Routes */}
-                <Route element={<ProtectedRoute allowedRoles={['provider']} />}>
+                {/* <Route element={<ProtectedRoute allowedRoles={['provider']} />}>
                     <Route path="/provider/storages" element={<StorageManagementPage />} />
                     <Route path="/provider/trucks" element={<TruckManagementPage />} />
                     <Route path="/provider/bookings" element={<BookingTrackingPage />} />
-                </Route>
+                </Route> */}
 
             </Routes>
         </div>
