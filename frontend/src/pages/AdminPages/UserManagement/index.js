@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import AdminLayout from '../../components/AdminLayout';
+import AdminLayout from '../../../layouts/AdminLayout';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
