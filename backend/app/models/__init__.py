@@ -7,3 +7,4 @@ from .user import User
 from .truck import Truck
 from .cold_storage import ColdStorage
 from .discount import Discount
+from .booking import Booking
