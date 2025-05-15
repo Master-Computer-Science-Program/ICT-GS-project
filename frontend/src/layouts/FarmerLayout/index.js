@@ -1,5 +1,5 @@
-import { Layout, Menu } from 'antd';
-import { ShoppingCartOutlined, SendOutlined, ShopOutlined } from '@ant-design/icons';
+import { Layout, Menu, Button } from 'antd';
+import { ShoppingCartOutlined, SendOutlined, ShopOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const { Sider, Content, Footer } = Layout;
@@ -7,6 +7,8 @@ const { Sider, Content, Footer } = Layout;
 const FarmerLayout = ({ children }) => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const username = localStorage.getItem('username') || 'Farmer';
 
     const menuItems = [
         {
@@ -20,9 +22,9 @@ const FarmerLayout = ({ children }) => {
             label: 'Send Requests',
         },
         {
-            key: '/farmer/sell',
+            key: '/farmer/orders',
             icon: <ShoppingCartOutlined />,
-            label: 'Sell Products',
+            label: 'Orders',
         },
     ];
 
@@ -30,21 +32,37 @@ const FarmerLayout = ({ children }) => {
         navigate(key);
     };
 
+    const logout = () => {
+        localStorage.clear();
+        navigate('/login');
+    };
+
     const currentMenu = menuItems.find(item => item.key === location.pathname);
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <Sider>
-                <div style={{ height: 32, margin: 16, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
-                    Farmer Panel
+            <Sider style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                    <div style={{ height: 32, margin: 16, color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
+                        Farmer Panel
+                    </div>
+                    <Menu
+                        theme="dark"
+                        mode="inline"
+                        selectedKeys={[location.pathname]}
+                        items={menuItems}
+                        onClick={onMenuClick}
+                    />
                 </div>
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    selectedKeys={[location.pathname]}
-                    items={menuItems}
-                    onClick={onMenuClick}
-                />
+
+                <div style={{ padding: '16px', color: 'white', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <div style={{ marginBottom: 8 }}>
+                        Logged in as <strong>{username}</strong>
+                    </div>
+                    <Button type="primary" icon={<LogoutOutlined />} block onClick={logout}>
+                        Logout
+                    </Button>
+                </div>
             </Sider>
 
             <Layout>
