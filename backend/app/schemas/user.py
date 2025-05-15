@@ -21,5 +21,6 @@ class UserRead(BaseModel):
     location: Optional[str] = None
     contact: Optional[str] = None
 
+
     class Config:
         orm_mode = True

@@ -10,7 +10,6 @@ from app.utils.security import verify_password, create_access_token
 
 router = APIRouter(prefix="/users", tags=["users"])
 
-
 @router.post("/register", response_model=UserRead)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     if crud_user.get_user_by_username(db, user.username):  # ← 注意改成 username
