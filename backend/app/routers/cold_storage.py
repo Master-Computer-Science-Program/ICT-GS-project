@@ -31,14 +31,14 @@ def get_storage(storage_id: int, db: Session = Depends(get_db)):
 # Create new cold storage (Provider only)
 # ---------------------------
 @router.post("/", response_model=ColdStorageOut)
-def create_cold_storage(storage: ColdStorageCreate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def create_cold_storage(storage: ColdStorageCreate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     return crud.create_storage(db, storage, user.id)
 
 # ---------------------------
 # Update cold storage (Check if user is provider and is the owner of the storage)
 # ---------------------------
 @router.put("/{storage_id}", response_model=ColdStorageOut)
-def update_cold_storage(storage_id: int, storage: ColdStorageUpdate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def update_cold_storage(storage_id: int, storage: ColdStorageUpdate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     # Check if the user is the owner of the storage
     existing_storage = crud.get_storage_by_id(db, storage_id)
     if existing_storage and existing_storage.provider_id != user.id:
@@ -52,7 +52,7 @@ def update_cold_storage(storage_id: int, storage: ColdStorageUpdate, db: Session
 # Check if user is provider and is the owner of the storage
 # ---------------------------
 @router.delete("/{storage_id}", response_model=ColdStorageOut)
-def delete_cold_storage(storage_id: int, db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def delete_cold_storage(storage_id: int, db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     # Check if the user is the owner of the storage
     existing_storage = crud.get_storage_by_id(db, storage_id)
     if existing_storage and existing_storage.provider_id != user.id:
@@ -65,6 +65,6 @@ def delete_cold_storage(storage_id: int, db: Session = Depends(get_db), user: Us
 # Get cold storage by provider
 # ---------------------------
 @router.get("/provider/me", response_model=list[ColdStorageOut])
-def get_storages_by_provider(db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def get_storages_by_provider(db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     storages = crud.get_storages_by_provider(db, user.id)
     return storages

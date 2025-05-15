@@ -30,14 +30,14 @@ def get_truck(truck_id: int, db: Session = Depends(get_db)):
 # Create new truck (Provider only)
 # ---------------------------
 @router.post("/", response_model=TruckOut)
-def create_truck(truck: TruckCreate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def create_truck(truck: TruckCreate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     return crud.create_truck(db, truck, user.id)
   
 # ---------------------------
 # Update truck (Check if user is provider and is the owner of the truck)
 # ---------------------------
 @router.put("/{truck_id}", response_model=TruckOut) 
-def update_truck(truck_id: int, truck: TruckUpdate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def update_truck(truck_id: int, truck: TruckUpdate, db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     # Check if the user is the owner of the truck
     existing_truck = crud.get_truck_by_id(db, truck_id)
     if existing_truck and existing_truck.provider_id != user.id:
@@ -51,7 +51,7 @@ def update_truck(truck_id: int, truck: TruckUpdate, db: Session = Depends(get_db
 # Check if user is provider and is the owner of the truck
 # ---------------------------
 @router.delete("/{truck_id}", response_model=TruckOut)
-def delete_truck(truck_id: int, db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def delete_truck(truck_id: int, db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     # Check if the user is the owner of the truck
     existing_truck = crud.get_truck_by_id(db, truck_id)
     if existing_truck and existing_truck.provider_id != user.id:
@@ -64,6 +64,6 @@ def delete_truck(truck_id: int, db: Session = Depends(get_db), user: User = Depe
 # Get trucks by provider
 # ---------------------------
 @router.get("/provider/me", response_model=list[TruckOut])
-def get_trucks_by_provider(db: Session = Depends(get_db), user: User = Depends(require_any_role(["provider"]))):
+def get_trucks_by_provider(db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     trucks = crud.get_trucks_by_provider(db, user.id)
     return trucks
