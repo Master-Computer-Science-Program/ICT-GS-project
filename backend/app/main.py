@@ -17,7 +17,6 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
-
 app.include_router(product.router)
 app.include_router(order.router)
 app.include_router(auth.router)
