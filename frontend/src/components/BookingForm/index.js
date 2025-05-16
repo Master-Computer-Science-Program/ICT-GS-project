@@ -118,22 +118,7 @@ const BookingForm = ({ onSuccess }) => {
                     <Form.Item
                         label="End Date"
                         name="end_date"
-                        dependencies={['start_date']}
-                        rules={[
-                            { required: true, message: 'Please select end date' },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    const startDate = getFieldValue('start_date');
-                                    if (!value || !startDate) {
-                                        return Promise.resolve();
-                                    }
-                                    if (value.isSameOrAfter(startDate, 'day')) {
-                                        return Promise.resolve();
-                                    }
-                                    return Promise.reject(new Error('End date must be after or same as start date'));
-                                },
-                            }),
-                        ]}
+                        rules={[{ required: true, message: 'Please select end date' }]}
                     >
                         <DatePicker style={{ width: '100%' }} />
                     </Form.Item>
