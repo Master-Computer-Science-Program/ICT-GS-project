@@ -5,7 +5,7 @@ import ProductForm from '../../components/ProductForm';
 import { getProducts, createProduct, updateProduct, deleteProduct } from '../../services/productService';
 import FarmerLayout from '../../layouts/FarmerLayout';
 
-const ProductListPage = () => {
+const FarmerProductPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
@@ -81,12 +81,12 @@ const ProductListPage = () => {
                 footer={null}
             >
                 <ProductForm
-                initialValues={editingProduct || {}}
-                onSubmit={editingProduct ? handleEdit : handleAdd}
+                    initialValues={editingProduct || {}}
+                    onSubmit={editingProduct ? handleEdit : handleAdd}
                 />
             </Modal>
         </FarmerLayout>
     );
 };
 
-export default ProductListPage;
+export default FarmerProductPage;

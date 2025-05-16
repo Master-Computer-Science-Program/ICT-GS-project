@@ -5,9 +5,14 @@ import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/AdminPages/Dashboard';
 import UserManagement from './pages/AdminPages/UserManagement';
 import AlertViewer from './pages/AdminPages/AlertViewer';
-import ProductListPage from './pages/ProductListPage';
+import FarmerProductPage from './pages/FarmerProductPage';
+import FarmerBookingPage from './pages/FarmerBookingPage';
+import ProviderStoragePage from './pages/ProviderStoragePage';
 
 import { Navigate, Outlet } from 'react-router-dom';
+import ProviderTruckPage from './pages/ProviderTruckPage';
+import ProviderBookingPage from './pages/ProviderBookingPage';
+import ProviderDiscountPage from './pages/ProviderDiscountPage';
 
 const ProtectedRoute = ({ allowedRoles }) => {
     const token = localStorage.getItem('token');
@@ -41,7 +46,8 @@ const App = () => {
 
                 {/* Farmer Protected Routes */}
                 <Route element={<ProtectedRoute allowedRoles={['farmer']} />}>
-                    <Route path="/farmer/products" element={<ProductListPage />} />
+                    <Route path="/farmer/products" element={<FarmerProductPage />} />
+                    <Route path="/farmer/requests" element={<FarmerBookingPage />} />
                 </Route>
 
                 {/* Customer Protected Routes */}
@@ -52,11 +58,12 @@ const App = () => {
                 </Route> */}
 
                 {/* Service Provider Protected Routes */}
-                {/* <Route element={<ProtectedRoute allowedRoles={['provider']} />}>
-                    <Route path="/provider/storages" element={<StorageManagementPage />} />
-                    <Route path="/provider/trucks" element={<TruckManagementPage />} />
-                    <Route path="/provider/bookings" element={<BookingTrackingPage />} />
-                </Route> */}
+                <Route element={<ProtectedRoute allowedRoles={['service_provider']} />}>
+                    <Route path="/provider/storages" element={<ProviderStoragePage />} />
+                    <Route path="/provider/trucks" element={<ProviderTruckPage />} />
+                    <Route path="/provider/bookings" element={<ProviderBookingPage />} />
+                    <Route path="/provider/discounts" element={<ProviderDiscountPage />} />
+                </Route>
 
             </Routes>
         </div>
