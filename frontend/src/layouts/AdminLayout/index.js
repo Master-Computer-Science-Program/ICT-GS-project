@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button } from 'antd';
-import { DashboardOutlined, UserOutlined, AlertOutlined, LogoutOutlined } from '@ant-design/icons';
+import { DashboardOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -21,11 +21,6 @@ const AdminLayout = ({ children }) => {
       key: '/admin/users',
       icon: <UserOutlined />,
       label: 'User Management',
-    },
-    {
-      key: '/admin/alerts',
-      icon: <AlertOutlined />,
-      label: 'System Alerts',
     },
   ];
 

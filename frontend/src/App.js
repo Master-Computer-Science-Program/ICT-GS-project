@@ -4,7 +4,6 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/AdminPages/Dashboard';
 import UserManagement from './pages/AdminPages/UserManagement';
-import AlertViewer from './pages/AdminPages/AlertViewer';
 import FarmerProductPage from './pages/FarmerProductPage';
 import FarmerBookingPage from './pages/FarmerBookingPage';
 import ProviderStoragePage from './pages/ProviderStoragePage';
@@ -41,7 +40,6 @@ const App = () => {
                     <Route path="/admin" element={<Dashboard />} />
                     <Route path="/admin/dashboard" element={<Dashboard />} />
                     <Route path="/admin/users" element={<UserManagement />} />
-                    <Route path="/admin/alerts" element={<AlertViewer />} />
                 </Route>
 
                 {/* Farmer Protected Routes */}

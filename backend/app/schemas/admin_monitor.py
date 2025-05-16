@@ -58,3 +58,21 @@ class BookingInfo(BaseModel):
 class BookingListResponse(BaseModel):
     total: int
     bookings: List[BookingInfo]
+
+
+class UserInfo(BaseModel):
+    id: int
+    email: str
+    hashed_password: str
+    role: str
+    name: Optional[str] = None
+    location: Optional[str] = None
+    contact: Optional[str] = None
+
+    class Config:
+        orm_mode = True
+
+
+class UserListResponse(BaseModel):
+    total: int
+    users: List[UserInfo]

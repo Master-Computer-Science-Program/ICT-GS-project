@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models import Order, Payment, Booking
+from app.models import Order, Payment, Booking, User
 from app.schemas.admin_monitor import FilterParams, OrderInfo, BookingInfo
 from typing import List, Tuple
 
@@ -41,4 +41,22 @@ def get_filtered_bookings(db: Session, filters: FilterParams) -> Tuple[int, List
     )
     return total, bookings
 
+def get_all_users(db: Session):
+    query = db.query(User)
 
+    total = query.count()
+    users = (
+        query.all()
+    )
+    return total, users
+
+def delete_user(db: Session, id):
+    query = db.query(User)
+
+    query = query.filter(User.id == id)
+
+    query.delete()
+    db.commit()
+
+    return True
+    

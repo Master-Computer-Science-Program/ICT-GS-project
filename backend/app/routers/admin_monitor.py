@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.configs.db import get_db
-from app.schemas.admin_monitor import FilterParams, OrderListResponse, BookingListResponse, OrderInfo, BookingInfo, PaymentInfo
+from app.schemas.admin_monitor import FilterParams, OrderListResponse, BookingListResponse, UserListResponse, UserInfo, OrderInfo, BookingInfo, PaymentInfo
 from app.crud import admin_monitor as crud
 
 router = APIRouter(prefix="/admin-monitor", tags=["admin-monitor"])
@@ -47,3 +47,28 @@ def monitor_bookings(filters: FilterParams = Depends(), db: Session = Depends(ge
         ))
     return {"total": total, "bookings": result}
 
+@router.get("/users", response_model=UserListResponse)
+def monitor_users(filters: FilterParams = Depends(), db: Session = Depends(get_db)):
+    total, users = crud.get_all_users(db)
+    result = []
+    for user in users:
+        result.append(UserInfo(
+            id=user.id,
+            email=user.email,
+            hashed_password=user.hashed_password,
+            role=user.role,
+            name=user.name,
+            location=user.location,
+            contact=user.contact
+        ))
+    return {"total": total, "users": result}
+
+
+@router.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    print(user_id)
+    success = crud.delete_user(db, user_id)
+    if not success:
+        print("err")
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"detail": "User deleted successfully"}
