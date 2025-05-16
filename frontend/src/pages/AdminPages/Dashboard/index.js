@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../../layouts/AdminLayout';
-import { getRecentBookings, getRecentOrders } from '../../../services/adminService';
+import { getRecentBookings, getRecentOrders, getUsers } from '../../../services/adminService';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
-  const [orders, setOrders] = useState(null)
+  const [ordersData, setOrders] = useState(null)
+  const [userData, setUsers] = useState(null)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,6 +16,10 @@ const Dashboard = () => {
 
         const order_res = await getRecentOrders()
         setOrders(order_res.data);
+
+        const user_res = await getUsers()
+        setUsers(user_res.data)
+
       } catch (err) {
         console.error('Failed to fetch transaction stats:', err);
       } finally {
@@ -39,11 +44,11 @@ const Dashboard = () => {
             </div>
             <div className="card">
             <p>Total Revenue</p>
-            <p>₹ {orders.orders.reduce((res, order) => res + order.totalAmount, 0)}</p>
+            <p>₹ {ordersData.orders.reduce((res, order) => res + order.totalAmount, 0)}</p>
             </div>
             <div className="card">
             <p>Active Users</p>
-            <p>{stats.activeUsers}</p>
+            <p>{userData.total}</p>
             </div>
         </div>
 
@@ -84,7 +89,7 @@ const Dashboard = () => {
                 </tr>
             </thead>
             <tbody>
-                {orders.orders.map((order) => (
+                {ordersData.orders.map((order) => (
                 <tr key={order.id}>
                     <td>{order.totalAmount}</td>
                     <td>{order.status}</td>
