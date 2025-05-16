@@ -6,6 +6,10 @@ from app.models.truck import Truck
 
 from app.constants.booking import BookingStatus, BookingType
 
+from datetime import datetime
+
+from app.crud.discount import get_discount
+
 def create_booking(db: Session, booking_data: BookingCreate, farmer_id: int):
     # Calculate duration in days
     duration_days = (booking_data.end_date - booking_data.start_date).days + 1
@@ -26,6 +30,12 @@ def create_booking(db: Session, booking_data: BookingCreate, farmer_id: int):
 
     else:
         raise ValueError("Invalid booking type or missing reference id")
+    
+    if booking_data.discount_id is not None:
+        discount = get_discount(db, booking_data.discount_id)
+        if discount.valid_until < datetime.now().date():
+            raise ValueError("Discount code is expired")
+        total_price = total_price * (1 - discount.percentage / 100)
     
     booking = Booking(
         booking_type=booking_data.booking_type,
