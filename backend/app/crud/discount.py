@@ -33,3 +33,6 @@ def delete_discount(db: Session, discount_id: str):
     db.delete(db_discount)
     db.commit()
     return db_discount
+
+def get_discounts_by_provider(db: Session, provider_id: int):
+    return db.query(Discount).filter(Discount.provider_id == provider_id).all()

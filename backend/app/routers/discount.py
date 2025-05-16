@@ -14,6 +14,14 @@ def create_discount(discount: discount_schema.DiscountCreate, db: Session = Depe
         raise HTTPException(status_code=400, detail="Discount ID already exists")
     return discount_crud.create_discount(db, discount, provider.id)
 
+@router.get("/me", response_model=list[discount_schema.DiscountOut])
+def get_my_discounts(db: Session = Depends(get_db), provider: str = Depends(require_any_role(["service_provider"]))):
+    db_discounts = discount_crud.get_discounts_by_provider(db, provider_id=provider.id)
+    print(db_discounts)
+    if not db_discounts:
+        raise HTTPException(status_code=404, detail="No discounts found for this provider")
+    return db_discounts
+
 @router.get("/{discount_id}", response_model=discount_schema.DiscountOut)
 def read_discount(discount_id: str, db: Session = Depends(get_db)):
     db_discount = discount_crud.get_discount(db, discount_id)

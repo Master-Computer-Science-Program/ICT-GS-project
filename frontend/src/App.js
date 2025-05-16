@@ -12,6 +12,7 @@ import ProviderStoragePage from './pages/ProviderStoragePage';
 import { Navigate, Outlet } from 'react-router-dom';
 import ProviderTruckPage from './pages/ProviderTruckPage';
 import ProviderBookingPage from './pages/ProviderBookingPage';
+import ProviderDiscountPage from './pages/ProviderDiscountPage';
 
 const ProtectedRoute = ({ allowedRoles }) => {
     const token = localStorage.getItem('token');
@@ -61,6 +62,7 @@ const App = () => {
                     <Route path="/provider/storages" element={<ProviderStoragePage />} />
                     <Route path="/provider/trucks" element={<ProviderTruckPage />} />
                     <Route path="/provider/bookings" element={<ProviderBookingPage />} />
+                    <Route path="/provider/discounts" element={<ProviderDiscountPage />} />
                 </Route>
 
             </Routes>

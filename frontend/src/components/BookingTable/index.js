@@ -1,7 +1,7 @@
 import { Table, Tag } from 'antd';
 
 const BookingTable = ({ data, loading, type }) => {
-    const isStorage = type === 'storage';
+    const isStorage = type === 'cold_storage';
     const isTruck = type === 'truck';
 
     const columns = [
