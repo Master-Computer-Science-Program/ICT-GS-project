@@ -17,13 +17,6 @@ def register_product(product: ProductCreate, db: Session = Depends(get_db), farm
 def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud_product.get_products(db, skip, limit)
 
-@router.get("/{product_id}", response_model=ProductRead)
-def get_product(product_id: str, db: Session = Depends(get_db)):
-    product = crud_product.get_product(db, product_id)
-    if not product:
-        raise HTTPException(status_code=404, detail="Product not found")
-    return product
-
 @router.put("/{product_id}", response_model=ProductRead)
 def update_product(product_id: str, updated: ProductUpdate, db: Session = Depends(get_db), farmer: User = Depends(require_any_role(["farmer"]))):
     product = crud_product.update_product(db, product_id, updated, farmer.id)
@@ -37,3 +30,10 @@ def delete_product(product_id: str, db: Session = Depends(get_db), farmer: User 
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return {"detail": "Deleted"}
+
+@router.get("/{product_id}", response_model=ProductRead)
+def get_product(product_id: str, db: Session = Depends(get_db)):
+    product = crud_product.get_product(db, product_id)
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return product

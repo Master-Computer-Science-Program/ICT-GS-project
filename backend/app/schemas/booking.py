@@ -10,6 +10,7 @@ class BookingCreate(BaseModel):
     distance: Optional[float] = None
     cold_storage_id: Optional[int] = None
     truck_id: Optional[int] = None
+    discount_id: Optional[str] = None
 
 class BookingUpdate(BaseModel):
     status: Optional[str] = None

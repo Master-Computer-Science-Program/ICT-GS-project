@@ -8,13 +8,6 @@ from app.utils.security import require_any_role
 from app.models.user import User
 
 router = APIRouter(prefix="/trucks", tags=["Trucks"])
-
-# ---------------------------
-# Get all trucks
-# ---------------------------
-@router.get("/", response_model=list[TruckOut])
-def list_trucks(db: Session = Depends(get_db)):
-    return crud.get_all_trucks(db)
   
 # ---------------------------
 # Get truck by ID
@@ -67,3 +60,10 @@ def delete_truck(truck_id: int, db: Session = Depends(get_db), user: User = Depe
 def get_trucks_by_provider(db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     trucks = crud.get_trucks_by_provider(db, user.id)
     return trucks
+
+# ---------------------------
+# Get all trucks
+# ---------------------------
+@router.get("/", response_model=list[TruckOut])
+def list_trucks(db: Session = Depends(get_db)):
+    return crud.get_all_trucks(db)

@@ -26,6 +26,11 @@ const ServiceProviderLayout = ({ children }) => {
             icon: <CalendarOutlined />,
             label: 'Manage Bookings',
         },
+        {
+            key: '/provider/discounts',
+            icon: <ShopOutlined />,
+            label: 'Manage Discounts',
+        },
     ];
 
     const onMenuClick = ({ key }) => {

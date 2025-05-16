@@ -28,6 +28,7 @@ const FarmerBookingPage = () => {
 
     const handleAdd = async (values) => {
         try {
+            console.log('Booking values:', values);
             await createBooking(values);
             message.success('Booking request submitted');
             fetchBookings();

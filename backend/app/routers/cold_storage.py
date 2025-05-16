@@ -11,23 +11,6 @@ from app.models.user import User
 router = APIRouter(prefix="/cold-storage", tags=["Cold Storage"])
 
 # ---------------------------
-# Get all cold storages
-# ---------------------------
-@router.get("/", response_model=list[ColdStorageOut])
-def list_storages(db: Session = Depends(get_db)):
-    return crud.get_all_storages(db)
-
-# ---------------------------
-# Get cold storage by ID
-# ---------------------------
-@router.get("/{storage_id}", response_model=ColdStorageOut)
-def get_storage(storage_id: int, db: Session = Depends(get_db)):
-    storage = crud.get_storage_by_id(db, storage_id)
-    if not storage:
-        raise HTTPException(status_code=404, detail="Cold storage not found")
-    return storage
-
-# ---------------------------
 # Create new cold storage (Provider only)
 # ---------------------------
 @router.post("/", response_model=ColdStorageOut)
@@ -68,3 +51,20 @@ def delete_cold_storage(storage_id: int, db: Session = Depends(get_db), user: Us
 def get_storages_by_provider(db: Session = Depends(get_db), user: User = Depends(require_any_role(["service_provider"]))):
     storages = crud.get_storages_by_provider(db, user.id)
     return storages
+
+# ---------------------------
+# Get all cold storages
+# ---------------------------
+@router.get("/", response_model=list[ColdStorageOut])
+def list_storages(db: Session = Depends(get_db)):
+    return crud.get_all_storages(db)
+
+# ---------------------------
+# Get cold storage by ID
+# ---------------------------
+@router.get("/{storage_id}", response_model=ColdStorageOut)
+def get_storage(storage_id: int, db: Session = Depends(get_db)):
+    storage = crud.get_storage_by_id(db, storage_id)
+    if not storage:
+        raise HTTPException(status_code=404, detail="Cold storage not found")
+    return storage
