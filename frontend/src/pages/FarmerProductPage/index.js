@@ -15,7 +15,9 @@ const FarmerProductPage = () => {
         setLoading(true);
         try {
         const res = await getProducts();
-        setProducts(res.data);
+        const farmerId = JSON.parse(localStorage.getItem('user_id'));
+        const filteredProducts = res.data.filter(product => product.owner_id === farmerId);
+        setProducts(filteredProducts);
         } catch (error) {
         message.error('Failed to load products');
         }

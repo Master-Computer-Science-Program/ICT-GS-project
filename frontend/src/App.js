@@ -7,6 +7,7 @@ import UserManagement from './pages/AdminPages/UserManagement';
 import FarmerProductPage from './pages/FarmerProductPage';
 import FarmerBookingPage from './pages/FarmerBookingPage';
 import ProviderStoragePage from './pages/ProviderStoragePage';
+import FarmerOrderPage from './pages/FarmerOrderPage';
 
 import { Navigate, Outlet } from 'react-router-dom';
 import ProviderTruckPage from './pages/ProviderTruckPage';
@@ -46,6 +47,7 @@ const App = () => {
                 <Route element={<ProtectedRoute allowedRoles={['farmer']} />}>
                     <Route path="/farmer/products" element={<FarmerProductPage />} />
                     <Route path="/farmer/requests" element={<FarmerBookingPage />} />
+                    <Route path="/farmer/orders" element={<FarmerOrderPage />} />
                 </Route>
 
                 {/* Customer Protected Routes */}

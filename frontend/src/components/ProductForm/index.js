@@ -4,13 +4,18 @@ import dayjs from 'dayjs';
 const ProductForm = ({ initialValues, onSubmit }) => {
     const [form] = Form.useForm();
 
+    const formInitialValues = {
+        ...initialValues,
+        harvestDate: initialValues?.harvestDate ? dayjs(initialValues.harvestDate) : null,
+    };
+
     const onFinish = (values) => {
         values.harvestDate = values.harvestDate.format('YYYY-MM-DD');
         onSubmit(values);
     };
 
     return (
-        <Form form={form} initialValues={initialValues} onFinish={onFinish} layout="vertical">
+        <Form form={form} initialValues={formInitialValues} onFinish={onFinish} layout="vertical">
             <Form.Item name="type" label="Type" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
