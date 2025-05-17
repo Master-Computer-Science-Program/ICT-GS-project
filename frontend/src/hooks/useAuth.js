@@ -7,6 +7,7 @@ export const useAuth = () => {
         localStorage.setItem('token', 'bearer ' + accessToken);
         localStorage.setItem('role', data.user.role);
         localStorage.setItem('username', data.user.name);
+        localStorage.setItem('user_id', data.user.id);
         // localStorage.setItem('user_id', data.user.id);
 
         if (data.user.role === 'admin') {

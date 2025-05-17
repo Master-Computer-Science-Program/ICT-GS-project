@@ -21,11 +21,11 @@ def list_orders(db: Session = Depends(get_db), user: User = Depends(require_any_
 # Get order by ID (Customer only)
 # ---------------------------
 @router.get("/{order_id}", response_model=OrderOut)
-def get_order(order_id: int, db: Session = Depends(get_db), user: User = Depends(require_any_role(["customer"]))):
+def get_order(order_id: int, db: Session = Depends(get_db), user: User = Depends(require_any_role(["customer", "farmer"]))):
     order = crud.get_order_by_id(db, order_id)
     if not order:
         raise HTTPException(status_code=404, detail="Order not found")
-    if order.customer_id != user.id:
+    if order.customer_id != user.id and user.role != "farmer":
         raise HTTPException(status_code=403, detail="Not authorized to view this order")
     return order
   

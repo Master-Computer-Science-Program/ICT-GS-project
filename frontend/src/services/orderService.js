@@ -25,5 +25,5 @@ export const confirmReceipt = (orderId) =>
     axios.post(`${API_URL}/${orderId}/confirm-receipt`, {}, authHeader());
 
 // Get all orders for current farmer
-export const getFarmerOrders = () =>
+export const getFarmerOrders = () => 
     axios.get(`${API_URL}/farmer/me`, authHeader());
