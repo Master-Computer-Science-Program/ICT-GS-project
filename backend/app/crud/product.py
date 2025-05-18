@@ -31,3 +31,6 @@ def delete_product(db: Session, product_id: str, owner_id: str):
         db.delete(db_product)
         db.commit()
     return db_product
+
+def search_products(db: Session, query: str):
+    return db.query(Product).filter(Product.type.ilike(f"%{query}%")).all()
