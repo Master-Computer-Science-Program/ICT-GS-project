@@ -37,3 +37,10 @@ def get_product(product_id: str, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
+
+@router.get("/search", response_model=list[ProductRead])
+def search_products(query: str, db: Session = Depends(get_db)):
+    products = crud_product.search_products(db, query)
+    if not products:
+        raise HTTPException(status_code=404, detail="No products found")
+    return products

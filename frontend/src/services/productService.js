@@ -18,3 +18,6 @@ export const updateProduct = (id, params) =>
 
 export const deleteProduct = (id) =>
     axios.delete(`${API_URL}/${id}`, authHeader());
+
+export const searchProducts = (params) =>
+    axios.get(`${API_URL}/search`, params, authHeader());
