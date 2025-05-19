@@ -26,6 +26,7 @@ class OrderCreate(BaseModel):
     orm_mode = True
     
 class Payment(BaseModel):
+  id: int
   amount: float
   status: str
   method: str

@@ -15,6 +15,7 @@ import ProviderBookingPage from './pages/ProviderBookingPage';
 import ProviderDiscountPage from './pages/ProviderDiscountPage';
 import CustomerCatalogPage from './pages/CustomerCatalogPage';
 import CustomerCartPage from './pages/CustomerCartPage';
+import CustomerOrderHistoryPage from './pages/CustomerOrderHistoryPage';
 
 const ProtectedRoute = ({ allowedRoles }) => {
     const token = localStorage.getItem('token');
@@ -56,7 +57,7 @@ const App = () => {
                 <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
                     <Route path="/customer/catalog" element={<CustomerCatalogPage />} />
                     <Route path="/customer/cart" element={<CustomerCartPage />} />
-                    {/* <Route path="/customer/orders" element={<OrderHistoryPage />} /> */}
+                    <Route path="/customer/orders" element={<CustomerOrderHistoryPage />} />
                 </Route>
 
                 {/* Service Provider Protected Routes */}

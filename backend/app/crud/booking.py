@@ -11,12 +11,12 @@ from datetime import datetime
 from app.crud.discount import get_discount
 
 def create_booking(db: Session, booking_data: BookingCreate, farmer_id: int):
-    # Calculate duration in days
-    duration_days = (booking_data.end_date - booking_data.start_date).days + 1
 
     total_price = 0.0
 
     if booking_data.booking_type == BookingType.cold_storage and booking_data.cold_storage_id:
+        # Calculate duration in days
+        duration_days = (booking_data.end_date - booking_data.start_date).days + 1
         cold_storage = db.query(ColdStorage).filter(ColdStorage.id == booking_data.cold_storage_id).first()
         if not cold_storage:
             raise ValueError("Cold Storage not found")

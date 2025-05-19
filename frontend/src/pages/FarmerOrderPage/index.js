@@ -15,13 +15,17 @@ const FarmerOrderPage = () => {
     setLoading(true);
     try {
     const res = await getFarmerOrders();
-    console.log('Orders:', res.data);
-    // const farmerId = JSON.parse(localStorage.getItem('user_id'));
-    // const filteredProducts = res.data.filter(product => product.owner_id === farmerId);
-    // setProducts(filteredProducts);
-    setOrders(res.data);
+    const farmerId = JSON.parse(localStorage.getItem('user_id'));
+    let filteredOrders = res.data;
+    filteredOrders.forEach(order => {
+        order.order_products = order.order_products.filter(product => product.product.owner_id === farmerId);
+    });
+    filteredOrders.forEach(order => {
+        order.totalAmount = order.order_products.reduce((total, product) => total + (product.product.price * product.quantity), 0);
+    });
+    setOrders(filteredOrders);
     } catch (error) {
-    message.error('Failed to load orders');
+    message.error('Failed to fetch orders');
     }
   };
 
