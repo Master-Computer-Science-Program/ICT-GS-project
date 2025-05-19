@@ -50,6 +50,8 @@ const UserManagement = () => {
                 <th>Username</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Location</th>
+                <th>Contact</th>
                 <th>Actions</th>
                 </tr>
             </thead>
@@ -57,9 +59,11 @@ const UserManagement = () => {
                 {users.users.map((user) => (
                 <tr key={user.id}>
                     <td>{user.id}</td>
-                    <td>{user.username}</td>
+                    <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
+                    <td>{user.location}</td>
+                    <td>{user.contact}</td>
                     <td>
                     <button
                         onClick={() => deleteUser(user.id)}

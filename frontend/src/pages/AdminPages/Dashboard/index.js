@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { getRecentBookings, getRecentOrders, getUsers } from '../../../services/adminService';
 
+const formatDate = (value) => {
+  const date = new Date(value)
+  const day = date.getDate()
+  const month = date.getMonth()
+  const year = date.getFullYear()
+
+  return day+'/'+(month+1)+'/'+year
+}
+
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [ordersData, setOrders] = useState(null)
@@ -40,15 +49,15 @@ const Dashboard = () => {
         <div className="card-grid">
             <div className="card">
             <p>Total Bookings</p>
-            <p>{stats.total}</p>
+            <p>{stats?.total ?? 0}</p>
             </div>
             <div className="card">
-            <p>Total Revenue</p>
-            <p>₹ {ordersData.orders.reduce((res, order) => res + order.totalAmount, 0)}</p>
+            <p>Total Orders</p>
+            <p>{ordersData?.total ?? 0}</p>
             </div>
             <div className="card">
-            <p>Active Users</p>
-            <p>{userData.total}</p>
+            <p>Total Users</p>
+            <p>{userData?.total ?? 0}</p>
             </div>
         </div>
 
@@ -57,19 +66,23 @@ const Dashboard = () => {
             <table className="table">
             <thead>
                 <tr>
-                <th>Booking ID</th>
-                <th>User</th>
-                <th>Service</th>
-                <th>Date</th>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 {stats.bookings.map((booking) => (
                 <tr key={booking.id}>
                     <td>{booking.id}</td>
-                    <td>{booking.username}</td>
-                    <td>{booking.service}</td>
-                    <td>{new Date(booking.date).toLocaleString()}</td>
+                    <td>{booking.booking_type}</td>
+                    <td>{booking.total_price}</td>
+                    <td>{formatDate(booking.start_date)}</td>
+                    <td>{formatDate(booking.end_date)}</td>
+                    <td>{booking.status}</td>
                 </tr>
                 ))}
             </tbody>
@@ -78,27 +91,33 @@ const Dashboard = () => {
 
 
         <div className="section">
-            <h2>Recent Orders</h2>
+          <h2>Recent Orders</h2>
+          {ordersData && ordersData.orders?.length > 0 ? (
             <table className="table">
-            <thead>
+              <thead>
                 <tr>
-                <th>Booking ID</th>
-                <th>User</th>
-                <th>Service</th>
-                <th>Date</th>
+                  <th>ID</th>
+                  <th>Customer</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
                 {ordersData.orders.map((order) => (
-                <tr key={order.id}>
-                    <td>{order.totalAmount}</td>
-                    <td>{order.status}</td>
-                    <td>{new Date(order.date).toLocaleString()}</td>
+                  <tr key={order.id}>
+                    <td>{order.id}</td>
                     <td>{order.customer_id}</td>
-                </tr>
+                    <td>{order.totalAmount}</td>
+                    <td>{formatDate(order.date)}</td>
+                    <td>{order.status}</td>
+                  </tr>
                 ))}
-            </tbody>
+              </tbody>
             </table>
+          ) : (
+            <p>Loading or no recent orders found.</p>
+          )}
         </div>
         </div>
     </AdminLayout>
