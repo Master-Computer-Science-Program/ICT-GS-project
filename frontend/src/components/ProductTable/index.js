@@ -2,8 +2,7 @@ import { Table, Button, Popconfirm, Tag } from 'antd';
 import dayjs from 'dayjs';
 import './index.css';
 
-const ProductTable = ({ data, onEdit, onDelete, loading }) => {
-    // Number of days to consider as "harvest soon"
+const ProductTable = ({ data, loading, onEdit, onDelete, actionRenderer }) => {
     const HARVEST_SOON_DAYS = 3;
 
     const columns = [
@@ -26,31 +25,30 @@ const ProductTable = ({ data, onEdit, onDelete, loading }) => {
         },
         {
             title: 'Action',
-            render: (_, record) => (
-                <>
-                    <Button type="link" onClick={() => onEdit(record)}>Edit</Button>
-                    <Popconfirm title="Are you sure?" onConfirm={() => onDelete(record.id)}>
-                        <Button type="link" danger>Delete</Button>
-                    </Popconfirm>
-                </>
-            ),
+            render: (_, record) =>
+                actionRenderer ? (
+                    actionRenderer(record)
+                ) : (
+                    <>
+                        <Button type="link" onClick={() => onEdit(record)}>Edit</Button>
+                        <Popconfirm title="Are you sure?" onConfirm={() => onDelete(record.id)}>
+                            <Button type="link" danger>Delete</Button>
+                        </Popconfirm>
+                    </>
+                ),
         },
     ];
 
-    // Add CSS class to highlight rows with harvest soon
     const rowClassName = (record) => {
         const today = dayjs();
         const harvestDate = dayjs(record.harvestDate);
-        if (harvestDate.isBefore(today.add(1, 'day'))) {
-            // no highlight for past (for sale)
-            return '';
-        } else if (harvestDate.isBefore(today.add(HARVEST_SOON_DAYS + 1, 'day'))) {
-            return 'harvest-soon-row';
-        }
+        if (harvestDate.isBefore(today.add(1, 'day'))) return '';
+        if (harvestDate.isBefore(today.add(HARVEST_SOON_DAYS + 1, 'day'))) return 'harvest-soon-row';
         return '';
     };
 
     return <Table rowKey="id" columns={columns} dataSource={data} loading={loading} rowClassName={rowClassName} />;
 };
+
 
 export default ProductTable;

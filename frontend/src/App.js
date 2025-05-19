@@ -13,6 +13,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 import ProviderTruckPage from './pages/ProviderTruckPage';
 import ProviderBookingPage from './pages/ProviderBookingPage';
 import ProviderDiscountPage from './pages/ProviderDiscountPage';
+import CustomerCatalogPage from './pages/CustomerCatalogPage';
+import CustomerCartPage from './pages/CustomerCartPage';
 
 const ProtectedRoute = ({ allowedRoles }) => {
     const token = localStorage.getItem('token');
@@ -51,11 +53,11 @@ const App = () => {
                 </Route>
 
                 {/* Customer Protected Routes */}
-                {/* <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
-                    <Route path="/customer/catalog" element={<ProductCatalogPage />} />
-                    <Route path="/customer/cart" element={<ShoppingCartPage />} />
-                    <Route path="/customer/orders" element={<OrderHistoryPage />} />
-                </Route> */}
+                <Route element={<ProtectedRoute allowedRoles={['customer']} />}>
+                    <Route path="/customer/catalog" element={<CustomerCatalogPage />} />
+                    <Route path="/customer/cart" element={<CustomerCartPage />} />
+                    {/* <Route path="/customer/orders" element={<OrderHistoryPage />} /> */}
+                </Route>
 
                 {/* Service Provider Protected Routes */}
                 <Route element={<ProtectedRoute allowedRoles={['service_provider']} />}>
