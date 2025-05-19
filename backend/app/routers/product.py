@@ -1,5 +1,7 @@
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi import Query
 from app.configs.db import get_db
 from app.schemas.product import ProductCreate, ProductRead, ProductUpdate
 from app.crud import product as crud_product
@@ -31,16 +33,25 @@ def delete_product(product_id: str, db: Session = Depends(get_db), farmer: User 
         raise HTTPException(status_code=404, detail="Product not found")
     return {"detail": "Deleted"}
 
+@router.get("/search", response_model=List[ProductRead])
+def search_products(
+    title: Optional[str] = Query(None, description="Search term for product title"),
+    db: Session = Depends(get_db)
+):
+    print(f"Searching for products with title: {title}")
+    if not title:
+        products = crud_product.get_products(db)
+        return products
+
+    print(f"Searching for products with title: {title}")
+    products = crud_product.search_products(db, title)
+
+    return products
+
+
 @router.get("/{product_id}", response_model=ProductRead)
 def get_product(product_id: str, db: Session = Depends(get_db)):
     product = crud_product.get_product(db, product_id)
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
-
-@router.get("/search", response_model=list[ProductRead])
-def search_products(query: str, db: Session = Depends(get_db)):
-    products = crud_product.search_products(db, query)
-    if not products:
-        raise HTTPException(status_code=404, detail="No products found")
-    return products

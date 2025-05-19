@@ -62,7 +62,6 @@ p {
 /* Global Button Styling */
 .ant-btn {
     float: right; /* Float the button to the right */
-    margin: 10px 0; /* Add vertical margin between buttons */
     border-radius: 4px; /* Rounded corners for the button */
     font-weight: bold; /* Make text bold */
     padding: 10px 20px; /* Adjust padding */
@@ -173,4 +172,8 @@ h1, h2 {
 textarea {
   width: 100%;
   font-family: inherit;
+}
+
+.ant-input-search-button {
+  float: none !important;
 }
