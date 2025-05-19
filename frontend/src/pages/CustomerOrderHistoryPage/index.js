@@ -120,7 +120,6 @@ const CustomerOrderHistoryPage = () => {
 
   return (
     <CustomerLayout>
-      <h2 style={{ marginBottom: 20 }}>Order History</h2>
       <Table
         dataSource={orders}
         columns={columns}
