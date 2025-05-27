@@ -9,6 +9,7 @@
 ### Before running
 
 - npm install first: `npm install`  
+- npm install: `cd frontend && npm install`
 
 ### How to run
 - build: `docker compose build`
