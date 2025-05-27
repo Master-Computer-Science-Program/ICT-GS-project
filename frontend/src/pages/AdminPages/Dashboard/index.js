@@ -3,12 +3,12 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { getRecentBookings, getRecentOrders, getUsers } from '../../../services/adminService';
 
 const formatDate = (value) => {
-  const date = new Date(value)
-  const day = date.getDate()
-  const month = date.getMonth()
-  const year = date.getFullYear()
-
-  return day+'/'+(month+1)+'/'+year
+  if (!value) return '-'; // handle null or undefined
+  const date = new Date(value);
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  return `${day}/${month + 1}/${year}`;
 }
 
 const Dashboard = () => {
