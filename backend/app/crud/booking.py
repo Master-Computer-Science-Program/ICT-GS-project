@@ -42,6 +42,7 @@ def create_booking(db: Session, booking_data: BookingCreate, farmer_id: int):
         booking_type=booking_data.booking_type,
         start_date=booking_data.start_date,
         end_date=booking_data.end_date,
+        distance=booking_data.distance,
         total_price=total_price,
         status=BookingStatus.requested,
         farmer_id=farmer_id,
